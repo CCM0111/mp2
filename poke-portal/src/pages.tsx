@@ -325,7 +325,9 @@ export const DetailPage: React.FC = () => {
       </header>
 
       {error && <p className="error-banner">{error}</p>}
-      {detail ? (
+      {isLoading ? (
+        <p className="empty-state">Loading Pokemon details...</p>
+      ) : detail ? (
         <article className="detail-card">
           <div className="detail-hero">
             <div className="detail-portrait" aria-hidden={!detail.sprite}>
@@ -406,8 +408,6 @@ export const DetailPage: React.FC = () => {
             </section>
           </div>
         </article>
-      ) : !error ? (
-        <p className="empty-state">Loading Pokemon details...</p>
       ) : null}
     </section>
   );

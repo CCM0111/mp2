@@ -44,7 +44,7 @@ async function getCached<T>(
   return response.data;
 }
 
-export interface NamedAPIResource<T = unknown> {
+export interface NamedAPIResource {
   name: string;
   url: string;
 }
