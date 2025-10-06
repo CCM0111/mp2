@@ -32,15 +32,19 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          cd poke-portal
+          npm ci
 
       - name: Build site
-        run: npm run build
+        run: |
+          cd poke-portal
+          npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./build
+          path: ./poke-portal/build
   
   deploy:
     needs: build
