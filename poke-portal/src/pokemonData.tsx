@@ -262,8 +262,6 @@ interface PokemonContextValue {
 
 const PokemonContext = createContext<PokemonContextValue | undefined>(undefined);
 
-const normalizeName = (value: string) => value.trim().toLowerCase();
-
 const extractErrorMessage = (error: unknown) => {
   if (error instanceof Error) return error.message;
   if (typeof error === 'string') return error;
@@ -339,7 +337,11 @@ export const PokemonProvider: React.FC<PropsWithChildren> = ({ children }) => {
     [
       list,
       totalCount,
+      isListLoading,
       listError,
+      listParams,
+      summariesById,
+      detailsById,
       loadList,
       getSummary,
       getDetail,
