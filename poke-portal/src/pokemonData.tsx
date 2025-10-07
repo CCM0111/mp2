@@ -235,11 +235,28 @@ const fetchPokemonSummary = async (nameOrId: string | number) => {
 };
 
 const fetchPokemonDetail = async (nameOrId: string | number) => {
-  const [pokemon, species] = await Promise.all([
-    fetchPokemonByNameOrId(nameOrId),
-    fetchPokemonSpeciesByNameOrId(nameOrId),
-  ]);
-  return mapToDetail(pokemon, species);
+  const pokemon = await fetchPokemonByNameOrId(nameOrId);
+  
+  // Try to fetch species data, but if it fails, create a basic detail object
+  try {
+    const species = await fetchPokemonSpeciesByNameOrId(nameOrId);
+    return mapToDetail(pokemon, species);
+  } catch (error) {
+    // If species data is not available, return basic detail without species info
+    return {
+      ...mapToSummary(pokemon),
+      height: pokemon.height,
+      weight: pokemon.weight,
+      baseExperience: pokemon.base_experience,
+      abilities: mapAbilities(pokemon.abilities),
+      stats: mapStats(pokemon.stats),
+      flavorText: undefined,
+      habitat: null,
+      genus: null,
+      isLegendary: false,
+      isMythical: false,
+    };
+  }
 };
 
 interface ListParams {
