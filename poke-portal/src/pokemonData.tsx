@@ -220,7 +220,7 @@ const mapToDetail = (pokemon: Pokemon, species: PokemonSpecies): PokemonDetail =
   isMythical: species.is_mythical,
 });
 
-const fetchPokemonList = (limit = 151, offset = 0) =>
+const fetchPokemonList = (limit = 10000, offset = 0) =>
   getCached<PokemonListResponse>('/pokemon', { limit, offset });
 
 const fetchPokemonByNameOrId = (nameOrId: string | number) =>
@@ -273,11 +273,11 @@ export const PokemonProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [totalCount, setTotalCount] = useState(0);
   const [isListLoading, setIsListLoading] = useState(false);
   const [listError, setListError] = useState<string | undefined>();
-  const [listParams, setListParams] = useState<ListParams>({ limit: 151, offset: 0 });
+  const [listParams, setListParams] = useState<ListParams>({ limit: 10000, offset: 0 });
   const [summariesById, setSummariesById] = useState<Record<number, PokemonSummary>>({});
   const [detailsById, setDetailsById] = useState<Record<number, PokemonDetail>>({});
 
-  const loadList = useCallback(async (limit = 151, offset = 0) => {
+  const loadList = useCallback(async (limit = 10000, offset = 0) => {
     // 如果已经有数据，直接返回不做任何操作
     if (list.length > 0) {
       return;
